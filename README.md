@@ -12,53 +12,122 @@
 
 ## ✨ 主な特徴 (Features)
 
-- **完全クライアントサイド完結 & Zero-Server**:
-  ファイル処理、差分解析、レポート生成、データ書き出しはすべてブラウザ内でローカル処理されます。外部サーバーへデータを送信しないためセキュリティ面でも安心です。
-- **プラグインベース拡張アーキテクチャ (Plugin Architecture)**:
-  `ToolPlugin` および `PluginRegistry` によるモジュール型設計。新しい開発ツールを容易に追加・拡張可能。
+- **完全クライアントサイド完結 (Zero-Server / Privacy First)**:
+  すべてのファイル解析、差分計算、レポート生成はブラウザ内部（`FileReader`, `Blob`, `navigator.clipboard`）でローカルに処理されます。外部サーバーへのデータ送信は一切行われません。
+- **モジュール型プラグインアーキテクチャ (Plugin Architecture)**:
+  `ToolPlugin` および `PluginRegistry` による拡張設計。各機能が独立してモジュール化されています。
 - **堅牢なエラー絶縁 (Error Isolation)**:
-  万が一特定のプラグインで例外が発生しても `PluginErrorBoundary` が安全にキャッチし、アプリ全体の影響を防止。
-- **共通 Drag & Drop & ファイルロード**:
-  ファイルやフォルダの一括ドロップ受入、自動エンコーディング判定、サイズ・拡張子バリデーション機能を提供。
-- **共通 Report Exporters**:
-  各ツールの分析・検証結果を 1 クリックで Markdown, HTML, JSON ファイル出力、およびクリップボードコピー可能。
-- **洗練されたプレミアムデザイン**:
-  ダークモード / ライトモード対応、ガラスモルフィズムスタイル、スムースなアニメーション、全デバイス対応レスポンシブデザイン。
+  万が一特定のプラグイン内部で例外が発生した場合でも、`PluginErrorBoundary` が安全にエラーを隔離し、アプリ全体の停止を防止します。
+- **共通 Drag & Drop & 多様な出力形式**:
+  全ツール共通でファイル・フォルダの一括ドラッグ＆ドロップ受入に対応。検査結果は 1 クリックで Markdown, HTML, JSON ファイル出力およびクリップボードコピーが可能です。
+- **洗練されたレスポンシブ UI**:
+  グラスモルフィズムデザイン、☀️/🌙 テーマ切り替え、モバイル(375px)からPC(4K)までのフルレスポンシブ対応。
 
 ---
 
-## 🛠️ 搭載ツール・プラグイン一覧 (Tools & Plugins)
+## 🛠️ 搭載ツール・プラグイン詳細 (Tools & Specifications)
 
-| プラグイン名 | カテゴリ | 概要・主要機能 |
+| プラグイン名 | カテゴリ | 検査対象・技術仕様 |
 | :--- | :--- | :--- |
-| 🔗 **MarkdownLinkChecker** | Documentation | Markdown 内の相対パスリンク確認、ローカル画像参照切れ検出、アンカーリンク検証、リンク検証レポート生成。 |
-| 🛡️ **GitHubPreflight** | Security | Pre-commit セキュリティ点検。APIキー / アクセストークン検出、TODO / console.log 残存チェック、不要ファイル検出。 |
-| 📦 **HandoffPack** | AI Workflow | 参照ドキュメント（README/SCHEDULE/RECORD等）と完了タスク・次回予定を統合したAI引き継ぎ用コンテキストパック自動生成。 |
-| ⚖️ **PromptDiff** | Optimization | 2つのプロンプト・テキストの行単位＆単語単位の差分（Diff）比較。類似率表示、追加/削除ハイライト表示、差分出力。 |
-| 🔍 **DocumentConsistencyChecker** | Verification | 複数ドキュメント間の用語表記ゆれ、タスクID・ステータス矛盾、欠落セクション、未完了タスクの一括検証。 |
+| 🔗 **MarkdownLinkChecker** | Documentation | Markdown 内の相対パスリンク `[text](path)`、ローカル画像参照 `![alt](src)`、見出しアンカー `#heading` の構文パースと実ファイル存在確認。 |
+| 🛡️ **GitHubPreflight** | Security | 公開前のセキュリティ点検。APIキー/アクセストークン（OpenAI, AWS, GitHub PAT等）、残存デバッグコード（`console.log`, `TODO`, `debugger`）、不要ファイル（`.env`, `node_modules`等）の正規表現一致検索。 |
+| 📦 **HandoffPack** | AI Workflow | 参照ドキュメント（README/SCHEDULE/RECORD等）と完了タスク・次回予定を構造化し、AI指示用のコンテキストパック Markdown を自動生成。 |
+| ⚖️ **PromptDiff** | Optimization | 自作 LCS (Longest Common Subsequence) エンジンによる 2 テキストの行単位および単語単位の差分比較・ハイライト表示・類似率計算。 |
+| 🔍 **DocumentConsistencyChecker** | Verification | 複数ドキュメント間（README/SCHEDULE/RECORD等）の用語表記ゆれ、タスクID矛盾、標準セクション欠落、未完了 `[ ]` タスクの一括照合。 |
 
 ---
 
-## 🚀 クイックスタート (Quick Start)
+## 📖 基本的な利用方法 (Usage Guide)
+
+### 1. アプリの起動とツール選択
+1. ブラウザでアプリケーションを開きます。
+2. 左側の**サイドバー**またはメインダッシュボードのカードから、利用したいツール（例: `GitHubPreflight` や `PromptDiff`）をクリックして選択します。
+3. ヘッダー右上の ☀️/🌙 アイコンで、お好みのテーマ（ライトモード/ダークモード）へ切り替えることができます。
+
+### 2. ファイルのインポート (Drag & Drop / 参照)
+- **ファイルの一括読み込み**: 画面内の「ドラッグ＆ドロップエリア」へファイルやフォルダを直接ドラッグ＆ドロップするか、点線エリアをクリックしてファイルを選択します。
+- **テキストの直貼り・編集**: `PromptDiff` や `HandoffPack` では、テキストエリアへ直接文字を入力・編集することも可能です。
+
+### 3. 検査結果の確認
+- ツールを選択すると自動的に解析・検証が実行され、ダッシュボードに**サマリーカード**（検出数・警告数・一致率など）と**詳細データテーブル**が表示されます。
+- フィルターボタン（例: `All`, `Errors`, `Warnings`）を使用して表示結果を絞り込むことができます。
+
+### 4. レポートのエクスポート
+- 画面上部または下部の **エクスポートボタンエリア** から、1 クリックで分析・検証結果を出力できます。
+  - 📝 **Markdown 保存**: `.md` ファイルとしてダウンロード。
+  - 🌐 **HTML 保存**: テーブル付き `.html` ファイルとして保存。
+  - 📄 **JSON 保存**: 構造化データ `.json` として出力。
+  - 📋 **Copy to Clipboard**: クリップボードへ即座にコピー。
+
+---
+
+## 🚀 クイックスタート & 開発手順 (Quick Start & Development)
+
+### 動作要件
+- **Node.js**: v18.0.0 以上
+- **npm**: v9.0.0 以上
 
 ### 開発環境での起動
 
 ```bash
+# リポジトリのクローン
+git clone https://github.com/tk030-lotto/dev-tools-collection.git
+cd dev-tools-collection
+
 # 依存関係のインストール
 npm install
 
-# 開発用ローカルサーバーの起動 (http://localhost:5173)
+# 開発用ローカルサーバーの起動 (デフォルト: http://localhost:5173)
 npm run dev
 ```
 
-### Production ビルド
+### Production ビルドとローカルプレビュー
 
 ```bash
 # TypeScript 型チェックおよびバンドルビルド
 npm run build
 
-# ビルド成果物のローカルプレビュー
+# ビルド成果物 (dist/) のローカルプレビュー
 npm run preview
+```
+
+---
+
+## ⚠️ 技術的制約と動作仕様 (Limitations & Specifications)
+
+本アプリケーションを正しくご利用いただくための技術的仕様・制限事項です：
+
+1. **解析ロジックの性質**:
+   各種検査機能は構文木（AST）や言語モデル（LLM）ではなく、**正規表現および文字列比較に基づく静的解析**で動作します。難読化されたコード内のシークレットや複雑な文脈依存の論理矛盾の検出には対応していません。
+2. **最大ファイル受入サイズ上限**:
+   ブラウザのメモリ保護のため、1 ファイルあたりの最大受入上限は **20MB** に設定されています。
+3. **テキスト Diff 比較行数上限**:
+   ブラウザのメインスレッドフリーズを防止するため、`PromptDiff` における LCS 比較は先頭 **3,000 行** を推奨上限として保護ガードが機能します。
+4. **自動テストの現状**:
+   `npm run build` による TypeScript コンパイル検証を行っていますが、Unit/E2E 自動テストスイートは未導入です。
+
+---
+
+## 🔌 新規プラグインの追加方法 (Adding New Plugins)
+
+本アプリは `ToolPlugin` インターフェースに従って新しいツールを容易に追加できます。
+
+```typescript
+import { ToolPlugin } from './core/types/plugin';
+import { pluginRegistry } from './core/registry/pluginRegistry';
+
+const myCustomPlugin: ToolPlugin = {
+  id: 'my-custom-tool',
+  name: 'マイカスタムツール',
+  description: '独自処理を行うプラグイン例',
+  icon: '⚡',
+  category: 'Utility',
+  version: '1.0.0',
+  component: MyCustomComponent,
+};
+
+// レジストリへ登録
+pluginRegistry.register(myCustomPlugin);
 ```
 
 ---
@@ -66,7 +135,7 @@ npm run preview
 ## 📁 プロジェクト構成 (Project Structure)
 
 ```text
-c:\Users\tk030\Desktop\開発ツール集
+dev-tools-collection/
 ├── dist/                          # Production ビルド成果物
 ├── src/
 │   ├── core/                      # コア基盤
@@ -74,7 +143,7 @@ c:\Users\tk030\Desktop\開発ツール集
 │   │   ├── registry/              # PluginRegistry API & PluginContainer / ErrorBoundary
 │   │   ├── services/              # fileReaderService, exportService
 │   │   └── types/                 # 共通型定義 (file, export, plugin)
-│   ├── plugins/                   # 機能プラグイン
+│   ├── plugins/                   # 機能プラグイン (全5ツール)
 │   │   ├── markdownLinkCheckerPlugin.tsx
 │   │   ├── gitHubPreflightPlugin.tsx
 │   │   ├── handoffPackPlugin.tsx
