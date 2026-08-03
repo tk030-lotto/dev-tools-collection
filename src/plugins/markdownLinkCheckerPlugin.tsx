@@ -382,54 +382,51 @@ const MarkdownLinkCheckerView: React.FC<PluginComponentProps> = () => {
         </div>
       )}
 
-      {/* Dashboard Stats */}
-      {links.length > 0 && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
-          <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '10px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1e293b' }}>{stats.total}</div>
-            <div style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '0.2rem' }}>検出リンク総数</div>
+      {/* Summary Cards */}
+      {stats && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '1rem' }} className="animate-fade-in-up">
+          <div className="glass-card hover-lift" style={{ padding: '1rem', textAlign: 'center' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.total}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>📊 総リンク数</div>
           </div>
 
-          <div style={{ background: stats.broken > 0 ? '#fef2f2' : '#f0fdf4', padding: '1rem', borderRadius: '10px', border: `1px solid ${stats.broken > 0 ? '#fca5a5' : '#86efac'}`, textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: stats.broken > 0 ? '#dc2626' : '#16a34a' }}>
-              {stats.broken}
-            </div>
-            <div style={{ fontSize: '0.75rem', color: stats.broken > 0 ? '#991b1b' : '#166534', marginTop: '0.2rem' }}>
-              ⚠️ エラー / リンク切れ
-            </div>
+          <div className="glass-card hover-lift" style={{ padding: '1rem', textAlign: 'center', borderColor: 'rgba(239, 68, 68, 0.4)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--status-error)' }}>{stats.broken}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--status-error)', marginTop: '0.2rem' }}>⚠️ リンク切れ/エラー</div>
           </div>
 
-          <div style={{ background: '#f0fdf4', padding: '1rem', borderRadius: '10px', border: '1px solid #86efac', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#16a34a' }}>{stats.valid}</div>
-            <div style={{ fontSize: '0.75rem', color: '#166534', marginTop: '0.2rem' }}>✅ 有効リンク</div>
+          <div className="glass-card hover-lift" style={{ padding: '1rem', textAlign: 'center', borderColor: 'rgba(16, 185, 129, 0.4)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--status-success)' }}>{stats.valid}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--status-success)', marginTop: '0.2rem' }}>✅ 有効リンク</div>
           </div>
 
-          <div style={{ background: '#eff6ff', padding: '1rem', borderRadius: '10px', border: '1px solid #bfdbfe', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#2563eb' }}>{stats.external}</div>
-            <div style={{ fontSize: '0.75rem', color: '#1e40af', marginTop: '0.2rem' }}>🌐 外部URL</div>
+          <div className="glass-card hover-lift" style={{ padding: '1rem', textAlign: 'center', borderColor: 'rgba(14, 165, 233, 0.4)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--status-info)' }}>{stats.external}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--status-info)', marginTop: '0.2rem' }}>🌐 外部URL</div>
           </div>
 
-          <div style={{ background: '#faf5ff', padding: '1rem', borderRadius: '10px', border: '1px solid #e9d5ff', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#9333ea' }}>{stats.images}</div>
-            <div style={{ fontSize: '0.75rem', color: '#6b21a8', marginTop: '0.2rem' }}>🖼️ 画像参照</div>
+          <div className="glass-card hover-lift" style={{ padding: '1rem', textAlign: 'center', borderColor: 'rgba(168, 85, 247, 0.4)' }}>
+            <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#a855f7' }}>{stats.images}</div>
+            <div style={{ fontSize: '0.75rem', color: '#a855f7', marginTop: '0.2rem' }}>🖼️ 画像参照</div>
           </div>
         </div>
       )}
 
       {/* Filter and Export Toolbar */}
       {links.length > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+        <div className="glass-panel animate-fade-in" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>絞り込み:</span>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)' }}>絞り込み:</span>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               style={{
                 padding: '0.4rem 0.75rem',
-                borderRadius: '6px',
-                border: '1px solid #cbd5e1',
+                borderRadius: 'var(--radius-sm)',
+                border: '1px solid var(--border-color)',
                 fontSize: '0.85rem',
-                background: '#ffffff',
+                background: 'var(--bg-secondary)',
+                color: 'var(--text-primary)',
               }}
             >
               <option value="all">すべてのリンク ({stats.total})</option>

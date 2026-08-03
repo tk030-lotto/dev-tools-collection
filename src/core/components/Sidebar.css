@@ -1,13 +1,16 @@
 .app-sidebar {
   width: 260px;
   height: calc(100vh - 64px);
-  background: var(--bg-secondary);
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   transition: width var(--transition-normal);
   overflow-x: hidden;
   flex-shrink: 0;
+  z-index: 10;
 }
 
 .app-sidebar.collapsed {
@@ -19,7 +22,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   overflow-y: auto;
 }
 
@@ -27,10 +30,11 @@
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   color: var(--text-muted);
   padding: 8px 12px 4px;
   white-space: nowrap;
+  transition: opacity var(--transition-fast);
 }
 
 .app-sidebar.collapsed .sidebar-section-title {
@@ -39,6 +43,7 @@
 }
 
 .sidebar-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -56,12 +61,27 @@
 .sidebar-item:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
+  transform: translateX(2px);
 }
 
 .sidebar-item.active {
   background: var(--accent-glow);
   color: var(--text-highlight);
   border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.15);
+  font-weight: 600;
+}
+
+.sidebar-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 0 4px 4px 0;
+  background: var(--accent-gradient);
+  box-shadow: var(--shadow-glow);
 }
 
 .sidebar-item-icon {
@@ -70,6 +90,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.sidebar-item:hover .sidebar-item-icon {
+  transform: scale(1.1);
 }
 
 .sidebar-item-text {
@@ -89,8 +114,10 @@
   color: var(--text-muted);
   text-align: center;
   white-space: nowrap;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .app-sidebar.collapsed .sidebar-footer-text {
   display: none;
 }
+
