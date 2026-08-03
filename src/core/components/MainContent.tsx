@@ -9,6 +9,7 @@ import { samplePlugin } from '../../plugins/samplePlugin';
 import { markdownLinkCheckerPlugin } from '../../plugins/markdownLinkCheckerPlugin';
 import { gitHubPreflightPlugin } from '../../plugins/gitHubPreflightPlugin';
 import { handoffPackPlugin } from '../../plugins/handoffPackPlugin';
+import { promptDiffPlugin } from '../../plugins/promptDiffPlugin';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -49,6 +50,7 @@ export const MainContent: React.FC<MainContentProps> = ({
     pluginRegistry.register(markdownLinkCheckerPlugin);
     pluginRegistry.register(gitHubPreflightPlugin);
     pluginRegistry.register(handoffPackPlugin);
+    pluginRegistry.register(promptDiffPlugin);
 
     // Initial fetch
     setRegisteredPlugins(pluginRegistry.getAll());
