@@ -83,6 +83,7 @@ c:\Users\tk030\Desktop\開発ツール集
 │   ├── App.tsx                    # アプリケーションルート
 │   ├── index.css                  # 共通デザインシステム & ユーティリティ
 │   └── main.tsx                   # エントリポイント
+├── LICENSE                        # MIT ライセンス全文
 ├── README.md                      # 本ドキュメント
 ├── SCHEDULE.md                    # 工程管理表
 └── RECORD.md                      # 開発記録
@@ -92,4 +93,44 @@ c:\Users\tk030\Desktop\開発ツール集
 
 ## 📄 ライセンス (License)
 
-[MIT License](LICENSE)
+本プロジェクトは **[MIT License](LICENSE)** のもとで公開・配布されています。
+
+### MIT ライセンス全条項（日本語訳）
+
+```text
+MIT License
+
+Copyright (c) 2026 tk030
+
+以下に定める条件に従い、本ソフトウェアおよび関連文書のファイル（以下「ソフトウェア」）の複製を取得するすべての人に対し、ソフトウェアを無制限に扱う無償の許可が付与されます。これには、ソフトウェアの複製を使用、複写、変更、結合、掲載、配布、サブライセンス、および/または販売する権利、およびソフトウェアを提供する相手にそれを許可する権利が含まれますが、これらに限定されません。
+
+上記の著作権表示および本許諾表示は、ソフトウェアのすべての複製または重要な部分に含まれるものとします。
+
+本ソフトウェアは「現状のまま」提供され、明示または黙示を問わず、商品性、特定目的への適合性、および権利侵害がないことの保証を含むがこれらに限定されない、いかなる種類の保証も行われません。いかなる場合においても、作者または著作権者は、契約行為、不法行為、またはその他の行為であるかを問わず、ソフトウェアまたはソフトウェアの使用またはその他の扱いに関連して発生する、いかなる請求、損害、その他の責任についても責任を負わないものとします。
+```
+
+### Official MIT License (English Original Text)
+
+```text
+MIT License
+
+Copyright (c) 2026 tk030
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
