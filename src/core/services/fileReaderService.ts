@@ -32,7 +32,7 @@ export function validateFile(
   file: File,
   options?: FileReadOptions
 ): FileValidationError | null {
-  const maxSizeBytes = options?.maxSizeBytes ?? 10 * 1024 * 1024; // 10MB default
+  const maxSizeBytes = options?.maxSizeBytes ?? 20 * 1024 * 1024; // 20MB default
 
   if (file.size > maxSizeBytes) {
     return {
@@ -72,6 +72,18 @@ export function readFileAsText(file: File): Promise<LoadedFile> {
 
     reader.onload = () => {
       const content = (reader.result as string) || '';
+      
+      // バイナリファイル誤検出チェック (先頭4KBにNull文字が含まれる場合)
+      const sample = content.substring(0, 4096);
+      if (sample.includes('\0')) {
+        reject({
+          fileName: file.name,
+          code: 'INVALID_TYPE',
+          message: 'バイナリまたはサポートされていない非テキスト形式のファイルが検出されました。',
+        } as FileValidationError);
+        return;
+      }
+
       const loadedFile: LoadedFile = {
         id: `${file.name}-${file.lastModified}-${Math.random().toString(36).substring(2, 9)}`,
         name: file.name,
