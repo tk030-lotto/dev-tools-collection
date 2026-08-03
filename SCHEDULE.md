@@ -7,7 +7,7 @@
 ## 📊 全体進捗ステータス
 
 - **総フェーズ数**: 4
-- **現在のフェーズ**: Phase 2 (機能プラグイン実装) ［P2-1 MarkdownLinkChecker 完了 🎉］
+- **現在のフェーズ**: Phase 2 (機能プラグイン実装) ［P2-2 GitHubPreflight 完了 🎉］
 - **最終更新日**: 2026-08-03
 
 ---
@@ -28,12 +28,12 @@
 
 ## 🚀 次回スタート: Phase 2 機能プラグイン実装
 
-### Phase 2: 機能プラグイン実装 ［未着手 ⏳］
+### Phase 2: 機能プラグイン実装 ［進行中 🔄］
 
-| タスクID | 対象ツール | 主要機能 | 状況 |
-| :--- | :--- | :--- | :---: |
+| タスクID | 対象ツール | 主要機能 | 状況 | 完了日 |
+| :--- | :--- | :--- | :---: | :---: |
 | **P2-1** | **MarkdownLinkChecker** | 相対リンク確認・画像参照エラー検出・レポート出力 | ✅ 完了 | 2026-08-03 |
-| **P2-2** | **GitHubPreflight** | APIキー/アクセストークン検出、TODO/console.log検査 | 🔄 着手 |
+| **P2-2** | **GitHubPreflight** | APIキー/アクセストークン検出、TODO/console.log検査 | ✅ 完了 | 2026-08-03 |
 | **P2-3** | **HandoffPack** | 要件/TODO/README収集、AI引き継ぎ用Markdown生成 | ⏳ 未着手 |
 | **P2-4** | **PromptDiff** | 2ファイル比較、差分ハイライト色分け、Markdown差分出力 | ⏳ 未着手 |
 | **P2-5** | **DocumentConsistencyChecker** | ドキュメント間（README/PLAN/TASKS）の不一致・重複・欠落検査 | ⏳ 未着手 |
