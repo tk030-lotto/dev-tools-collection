@@ -7,14 +7,14 @@
 ## 📊 全体進捗ステータス
 
 - **総フェーズ数**: 4
-- **現在のフェーズ**: Phase 1 (コア基盤構築)
+- **現在のフェーズ**: Phase 2 (機能プラグイン実装) ［P2-1 MarkdownLinkChecker 完了 🎉］
 - **最終更新日**: 2026-08-03
 
 ---
 
 ## 🚀 フェーズ別タスクロードマップ
 
-### Phase 1: コア基盤 (Core Platform & UI Shell) ［進行中 🔄］
+### Phase 1: コア基盤 (Core Platform & UI Shell) ［完了 🎉］
 
 | タスクID | 内容 | 状況 | 完了日 |
 | :--- | :--- | :---: | :---: |
@@ -22,15 +22,17 @@
 | **P1-2** | プレミアム UI Shell（サイドバーナビ・テーマ切替・メインコンテナ）の実装 | ✅ 完了 | 2026-08-03 |
 | **P1-3** | 共通 File Services (Drag & Drop, ファイル選択, テキスト/MD読込) | ✅ 完了 | 2026-08-03 |
 | **P1-4** | 共通 Report Exporters (Markdown, HTML, JSON, Clipboard コピー) | ✅ 完了 | 2026-08-03 |
-| **P1-5** | `PluginRegistry` API と `ToolPlugin` 動的コンテナの作成 | ⏳ 未着手 | - |
+| **P1-5** | `PluginRegistry` API と `ToolPlugin` 動的コンテナの作成 | ✅ 完了 | 2026-08-03 |
 
 ---
+
+## 🚀 次回スタート: Phase 2 機能プラグイン実装
 
 ### Phase 2: 機能プラグイン実装 ［未着手 ⏳］
 
 | タスクID | 対象ツール | 主要機能 | 状況 |
 | :--- | :--- | :--- | :---: |
-| **P2-1** | **MarkdownLinkChecker** | 相対リンク確認・画像参照エラー検出・レポート出力 | ⏳ 未着手 |
+| **P2-1** | **MarkdownLinkChecker** | 相対リンク確認・画像参照エラー検出・レポート出力 | ✅ 完了 | 2026-08-03 |
 | **P2-2** | **GitHubPreflight** | APIキー/アクセストークン検出、TODO/console.log検査 | ⏳ 未着手 |
 | **P2-3** | **HandoffPack** | 要件/TODO/README収集、AI引き継ぎ用Markdown生成 | ⏳ 未着手 |
 | **P2-4** | **PromptDiff** | 2ファイル比較、差分ハイライト色分け、Markdown差分出力 | ⏳ 未着手 |

@@ -6,6 +6,7 @@ import { PluginContainer } from './PluginContainer';
 import { pluginRegistry } from '../registry/pluginRegistry';
 import { ToolPlugin } from '../types/plugin';
 import { samplePlugin } from '../../plugins/samplePlugin';
+import { markdownLinkCheckerPlugin } from '../../plugins/markdownLinkCheckerPlugin';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -41,13 +42,14 @@ export const MainContent: React.FC<MainContentProps> = ({
 
   // Initialize and subscribe to PluginRegistry
   useEffect(() => {
-    // Register sample plugin for verification
+    // Register plugins
     pluginRegistry.register(samplePlugin);
+    pluginRegistry.register(markdownLinkCheckerPlugin);
 
     // Initial fetch
     setRegisteredPlugins(pluginRegistry.getAll());
     if (pluginRegistry.getAll().length > 0 && !selectedPluginId) {
-      setSelectedPluginId(pluginRegistry.getAll()[0].metadata.id);
+      setSelectedPluginId(markdownLinkCheckerPlugin.metadata.id);
     }
 
     // Subscribe to registry updates
@@ -166,6 +168,28 @@ export const MainContent: React.FC<MainContentProps> = ({
               </div>
             ))}
           </div>
+        </div>
+      </main>
+    );
+  }
+
+  const matchedPlugin = registeredPlugins.find((p) => p.metadata.id === activeToolId);
+
+  if (matchedPlugin) {
+    return (
+      <main className="app-main-content animate-fade-in">
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <button
+              className="btn btn-muted"
+              onClick={() => onSelectTool('dashboard')}
+              style={{ fontSize: '0.875rem' }}
+            >
+              ← ダッシュボードへ戻る
+            </button>
+            <span className="badge badge-success">Phase 2 稼働中</span>
+          </div>
+          <PluginContainer plugin={matchedPlugin} />
         </div>
       </main>
     );
