@@ -176,10 +176,24 @@ export const PromptDiffComponent: React.FC = () => {
     }
   };
 
-  // Calculate Diffs
+  // Calculate Diffs with performance guard
   const lineDiffs = useMemo(() => {
     const oldLines = originalText.split('\n');
     const newLines = modifiedText.split('\n');
+
+    // 長分ブラウザ保護ガード (3,000行超過時)
+    const MAX_SAFE_LINES = 3000;
+    if (oldLines.length > MAX_SAFE_LINES || newLines.length > MAX_SAFE_LINES) {
+      const truncatedOld = oldLines.slice(0, MAX_SAFE_LINES);
+      const truncatedNew = newLines.slice(0, MAX_SAFE_LINES);
+      const diffs = diffLines(truncatedOld, truncatedNew);
+      diffs.push({
+        type: 'unchanged',
+        text: `⚠️ [システム警告] テキストが非常に長いため (${Math.max(oldLines.length, newLines.length)} 行)、パフォーマンス保護目的で先頭 ${MAX_SAFE_LINES} 行のみ比較表示しています。`,
+      });
+      return diffs;
+    }
+
     return diffLines(oldLines, newLines);
   }, [originalText, modifiedText]);
 
