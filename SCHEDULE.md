@@ -20,7 +20,7 @@
 | :--- | :--- | :---: | :---: |
 | **P1-1** | Vite + React + TypeScript + Vanilla CSS プロジェクト基盤の構築 | ✅ 完了 | 2026-08-03 |
 | **P1-2** | プレミアム UI Shell（サイドバーナビ・テーマ切替・メインコンテナ）の実装 | ✅ 完了 | 2026-08-03 |
-| **P1-3** | 共通 File Services (Drag & Drop, ファイル選択, テキスト/MD読込) | ⏳ 未着手 | - |
+| **P1-3** | 共通 File Services (Drag & Drop, ファイル選択, テキスト/MD読込) | ✅ 完了 | 2026-08-03 |
 | **P1-4** | 共通 Report Exporters (Markdown, HTML, JSON, Clipboard コピー) | ⏳ 未着手 | - |
 | **P1-5** | `PluginRegistry` API と `ToolPlugin` 動的コンテナの作成 | ⏳ 未着手 | - |
 
