@@ -7,6 +7,7 @@ import { pluginRegistry } from '../registry/pluginRegistry';
 import { ToolPlugin } from '../types/plugin';
 import { samplePlugin } from '../../plugins/samplePlugin';
 import { markdownLinkCheckerPlugin } from '../../plugins/markdownLinkCheckerPlugin';
+import { gitHubPreflightPlugin } from '../../plugins/gitHubPreflightPlugin';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -45,6 +46,7 @@ export const MainContent: React.FC<MainContentProps> = ({
     // Register plugins
     pluginRegistry.register(samplePlugin);
     pluginRegistry.register(markdownLinkCheckerPlugin);
+    pluginRegistry.register(gitHubPreflightPlugin);
 
     // Initial fetch
     setRegisteredPlugins(pluginRegistry.getAll());
