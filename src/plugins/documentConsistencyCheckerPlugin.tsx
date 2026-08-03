@@ -160,6 +160,25 @@ const KNOWN_KEYWORDS = [
  * 解析エンジン
  */
 function analyzeDocuments(files: LoadedFile[]): AnalysisResult {
+  if (!files || files.length === 0) {
+    return {
+      score: 100,
+      totalFiles: 0,
+      issues: [],
+      taskMatrix: [],
+      termVariants: [],
+      stats: {
+        highCount: 0,
+        mediumCount: 0,
+        lowCount: 0,
+        termCount: 0,
+        taskMismatchCount: 0,
+        missingSectionCount: 0,
+        todoCount: 0,
+      },
+    };
+  }
+
   const issues: ConsistencyIssue[] = [];
   const taskMap: { [taskId: string]: { [file: string]: { status: string; line: number } } } = {};
   const termOccurrences: { [normalized: string]: { [exact: string]: { count: number; files: Set<string> } } } = {};
