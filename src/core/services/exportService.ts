@@ -50,6 +50,17 @@ function getTimestampString(): string {
 }
 
 /**
+ * OS予約文字 (/ \ : * ? " < > |) や不可視制御文字を除去・安全な文字に置換します
+ */
+export function sanitizeFilename(filename: string): string {
+  // OS 予約文字および制御文字をアンダースコアに置換
+  return filename
+    .replace(/[/\\?%*:|"<>]/g, '_')
+    .replace(/[\x00-\x1f\x7f]/g, '')
+    .trim();
+}
+
+/**
  * 出力ファイル名の生成
  */
 export function generateFilename(
@@ -58,12 +69,12 @@ export function generateFilename(
   addTimestamp: boolean = false
 ): string {
   const ext = getExportFileExtension(format);
-  // 既に拡張子がついている場合は除去
-  let cleanName = baseName.trim();
+  // サニタイズ適用
+  let cleanName = sanitizeFilename(baseName);
+  
   if (cleanName.endsWith(ext)) {
     cleanName = cleanName.slice(0, -ext.length);
   } else {
-    // 他の拡張子がついている場合も除去
     cleanName = cleanName.replace(/\.[^/.]+$/, '');
   }
 

@@ -7,6 +7,7 @@ export interface LoadedFile {
   extension: string;
   content: string;
   lastModified: number;
+  hasGarbledText?: boolean;
 }
 
 export interface FileReadOptions {

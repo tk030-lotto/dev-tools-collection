@@ -84,6 +84,10 @@ export function readFileAsText(file: File): Promise<LoadedFile> {
         return;
       }
 
+      // 非UTF-8 (Shift_JIS / EUC-JP等) による文字化け検出 (\uFFFD 置換文字のチェック)
+      const garbledMatches = content.match(/\uFFFD/g);
+      const hasGarbledText = garbledMatches !== null && garbledMatches.length > 2;
+
       const loadedFile: LoadedFile = {
         id: `${file.name}-${file.lastModified}-${Math.random().toString(36).substring(2, 9)}`,
         name: file.name,
@@ -93,6 +97,7 @@ export function readFileAsText(file: File): Promise<LoadedFile> {
         extension: getFileExtension(file.name),
         content,
         lastModified: file.lastModified,
+        hasGarbledText,
       };
       resolve(loadedFile);
     };

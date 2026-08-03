@@ -178,8 +178,12 @@ export const PromptDiffComponent: React.FC = () => {
 
   // Calculate Diffs with performance guard
   const lineDiffs = useMemo(() => {
-    const oldLines = originalText.split('\n');
-    const newLines = modifiedText.split('\n');
+    // 改行コード (CRLF / CR) を LF に自動正規化して誤差分を防止
+    const normalizedOld = originalText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const normalizedNew = modifiedText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+
+    const oldLines = normalizedOld.split('\n');
+    const newLines = normalizedNew.split('\n');
 
     // 長分ブラウザ保護ガード (3,000行超過時)
     const MAX_SAFE_LINES = 3000;

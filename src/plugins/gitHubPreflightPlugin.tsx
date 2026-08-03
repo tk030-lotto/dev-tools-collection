@@ -205,16 +205,31 @@ function scanFilesForPreflight(files: LoadedFile[]): PreflightIssue[] {
             const snippet = lineText.trim();
             const preview = snippet.length > 100 ? snippet.substring(0, 100) + '...' : snippet;
 
-            issues.push({
-              id: `issue-${idCounter++}`,
-              file: filePath,
-              line: lineNum,
-              category: rule.category,
-              severity: rule.severity,
-              ruleName: rule.name,
-              message: rule.description,
-              snippet: preview,
-            });
+            // 偽陽性 (False Positive) 防止フィルター: dummy, example, your-api-key などのサンプル文字列を除外
+            const isSecret = rule.category === 'secret';
+            const matchedStr = match[0].toLowerCase();
+            const isDummySecret =
+              isSecret &&
+              (matchedStr.includes('example') ||
+                matchedStr.includes('dummy') ||
+                matchedStr.includes('sample') ||
+                matchedStr.includes('your_api_key') ||
+                matchedStr.includes('your-key') ||
+                matchedStr.includes('xxxx') ||
+                matchedStr.includes('123456'));
+
+            if (!isDummySecret) {
+              issues.push({
+                id: `issue-${idCounter++}`,
+                file: filePath,
+                line: lineNum,
+                category: rule.category,
+                severity: rule.severity,
+                ruleName: rule.name,
+                message: rule.description,
+                snippet: preview,
+              });
+            }
 
             // Prevent infinite loop for non-global regex or zero-width match
             if (!rule.pattern.global || match.index === rule.pattern.lastIndex) {
