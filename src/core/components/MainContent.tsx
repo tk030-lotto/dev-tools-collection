@@ -1,5 +1,6 @@
 import React from 'react';
 import { TOOLS } from './Sidebar';
+import { FileDropZone } from './FileDropZone';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -23,6 +24,21 @@ export const MainContent: React.FC<MainContentProps> = ({
               開発プロセスを高速化・自動化するオールインワンツールプラットフォーム。
               左側のサイドバーまたは以下のカードからツールを選択して実行できます。
             </p>
+          </div>
+
+          {/* 共通 File Drop Zone 動作確認エリア (P1-3) */}
+          <div style={{ marginBottom: 'var(--space-8)' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--space-3)' }}>
+              📁 共通 File Drop Zone デモ (Phase 1-3)
+            </h2>
+            <FileDropZone
+              options={{
+                accept: ['.md', '.txt', '.json', '.js', '.ts', '.tsx', '.py'],
+                maxSizeBytes: 10 * 1024 * 1024,
+              }}
+              title="プロジェクトファイルまたはテキスト・MDドロップ"
+              description="ファイルをドラッグ＆ドロップするかクリックして選択（複数選択可）"
+            />
           </div>
 
           <div className="dashboard-grid">
