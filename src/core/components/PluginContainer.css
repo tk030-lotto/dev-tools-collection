@@ -1,0 +1,214 @@
+/* PluginContainer.css */
+
+.plugin-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, rgba(226, 232, 240, 0.8));
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+}
+
+.plugin-container:hover {
+  border-color: var(--border-hover, rgba(99, 102, 241, 0.3));
+}
+
+/* Header Section */
+.plugin-container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+  border-bottom: 1px solid var(--border-color, #e2e8f0);
+  backdrop-filter: blur(8px);
+}
+
+.plugin-header-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.plugin-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #ffffff;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+  flex-shrink: 0;
+}
+
+.plugin-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.plugin-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.plugin-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary, #0f172a);
+  letter-spacing: -0.01em;
+}
+
+.plugin-category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.725rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(99, 102, 241, 0.1);
+  color: #4f46e5;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.plugin-version-badge {
+  font-size: 0.75rem;
+  color: var(--text-muted, #64748b);
+  background: rgba(148, 163, 184, 0.15);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  font-family: monospace;
+}
+
+.plugin-description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #475569);
+  line-height: 1.4;
+}
+
+/* Actions in Header */
+.plugin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.plugin-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color, #cbd5e1);
+  background: #ffffff;
+  color: var(--text-secondary, #334155);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.plugin-action-btn:hover {
+  background: #f8fafc;
+  color: var(--text-primary, #0f172a);
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+/* Content Area */
+.plugin-container-body {
+  padding: 1.5rem;
+  background: var(--bg-card, #ffffff);
+  min-height: 240px;
+}
+
+/* Empty / Null state */
+.plugin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--text-muted, #64748b);
+}
+
+.plugin-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.plugin-empty-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+  margin-bottom: 0.5rem;
+}
+
+/* Error Boundary UI */
+.plugin-error-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: #fef2f2;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  text-align: center;
+  color: #991b1b;
+}
+
+.plugin-error-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.plugin-error-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.plugin-error-message {
+  font-size: 0.875rem;
+  color: #b91c1c;
+  font-family: monospace;
+  background: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fca5a5;
+  max-width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.plugin-retry-btn {
+  padding: 0.5rem 1.25rem;
+  background: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.plugin-retry-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}

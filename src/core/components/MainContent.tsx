@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { TOOLS } from './Sidebar';
 import { FileDropZone } from './FileDropZone';
 import { ExportButtons } from './ExportButtons';
+import { PluginContainer } from './PluginContainer';
+import { pluginRegistry } from '../registry/pluginRegistry';
+import { ToolPlugin } from '../types/plugin';
+import { samplePlugin } from '../../plugins/samplePlugin';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -32,7 +36,32 @@ export const MainContent: React.FC<MainContentProps> = ({
   activeToolId,
   onSelectTool,
 }) => {
+  const [registeredPlugins, setRegisteredPlugins] = useState<ToolPlugin[]>([]);
+  const [selectedPluginId, setSelectedPluginId] = useState<string | null>(null);
+
+  // Initialize and subscribe to PluginRegistry
+  useEffect(() => {
+    // Register sample plugin for verification
+    pluginRegistry.register(samplePlugin);
+
+    // Initial fetch
+    setRegisteredPlugins(pluginRegistry.getAll());
+    if (pluginRegistry.getAll().length > 0 && !selectedPluginId) {
+      setSelectedPluginId(pluginRegistry.getAll()[0].metadata.id);
+    }
+
+    // Subscribe to registry updates
+    const unsubscribe = pluginRegistry.subscribe(() => {
+      setRegisteredPlugins(pluginRegistry.getAll());
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const activeTool = TOOLS.find((t) => t.id === activeToolId);
+  const activePlugin = registeredPlugins.find((p) => p.metadata.id === selectedPluginId);
 
   if (activeToolId === 'dashboard' || !activeTool) {
     return (
@@ -44,6 +73,40 @@ export const MainContent: React.FC<MainContentProps> = ({
               開発プロセスを高速化・自動化するオールインワンツールプラットフォーム。
               左側のサイドバーまたは以下のカードからツールを選択して実行できます。
             </p>
+          </div>
+
+          {/* プラグインコンテナ & レジストリ動作確認エリア (P1-5) */}
+          <div style={{ marginBottom: 'var(--space-8)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--space-3)' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>
+                🧩 PluginContainer & Dynamic Registry デモ (Phase 1-5)
+              </h2>
+              <span className="badge badge-info" style={{ fontSize: '0.8rem' }}>
+                登録数: {registeredPlugins.length}
+              </span>
+            </div>
+
+            {/* Registered Plugin Selector */}
+            {registeredPlugins.length > 1 && (
+              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+                {registeredPlugins.map((p) => (
+                  <button
+                    key={p.metadata.id}
+                    className={`btn ${selectedPluginId === p.metadata.id ? 'btn-primary' : 'btn-muted'}`}
+                    onClick={() => setSelectedPluginId(p.metadata.id)}
+                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.825rem' }}
+                  >
+                    {p.metadata.icon} {p.metadata.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Dynamic Plugin Rendering Container */}
+            <PluginContainer
+              plugin={activePlugin}
+              onClose={() => setSelectedPluginId(null)}
+            />
           </div>
 
           {/* 共通 File Drop Zone 動作確認エリア (P1-3) */}
@@ -75,7 +138,6 @@ export const MainContent: React.FC<MainContentProps> = ({
               addTimestamp={true}
             />
           </div>
-
 
           <div className="dashboard-grid">
             {TOOLS.filter((t) => t.id !== 'dashboard').map((tool) => (
