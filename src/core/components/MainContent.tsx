@@ -1,12 +1,32 @@
 import React from 'react';
 import { TOOLS } from './Sidebar';
 import { FileDropZone } from './FileDropZone';
+import { ExportButtons } from './ExportButtons';
 import './MainContent.css';
 
 interface MainContentProps {
   activeToolId: string;
   onSelectTool: (id: string) => void;
 }
+
+const DEMO_REPORT_CONTENT = `# DevTools Suite 解析レポート サンプル
+
+## 概要
+本レポートは **DevTools Suite (Phase 1-4)** の Report Exporters 機能検証用のサンプルコンテンツです。
+
+- **バージョン**: 1.0.0
+- **ビルドステータス**: Successful
+- **実行日時**: ${new Date().toLocaleString()}
+
+### チェック項目
+1. [x] クリップボードコピー機能
+2. [x] Markdown (.md) 保存
+3. [x] HTML (.html) 保存
+4. [x] JSON (.json) 保存
+5. [x] Text (.txt) 保存
+
+> DevTools Suite は開発プロセスの自動化・効率化を強力にサポートします。
+`;
 
 export const MainContent: React.FC<MainContentProps> = ({
   activeToolId,
@@ -27,7 +47,7 @@ export const MainContent: React.FC<MainContentProps> = ({
           </div>
 
           {/* 共通 File Drop Zone 動作確認エリア (P1-3) */}
-          <div style={{ marginBottom: 'var(--space-8)' }}>
+          <div style={{ marginBottom: 'var(--space-6)' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--space-3)' }}>
               📁 共通 File Drop Zone デモ (Phase 1-3)
             </h2>
@@ -40,6 +60,22 @@ export const MainContent: React.FC<MainContentProps> = ({
               description="ファイルをドラッグ＆ドロップするかクリックして選択（複数選択可）"
             />
           </div>
+
+          {/* 共通 Report Exporters 動作確認エリア (P1-4) */}
+          <div style={{ marginBottom: 'var(--space-8)', padding: 'var(--space-4)', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 'var(--space-2)' }}>
+              📤 共通 Report Exporters デモ (Phase 1-4)
+            </h2>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginBottom: 'var(--space-3)' }}>
+              生成された解析レポートやツール結果を各種フォーマットで保存・コピーする共通コンポーネントです。
+            </p>
+            <ExportButtons
+              content={DEMO_REPORT_CONTENT}
+              filename="devtools_analysis_report"
+              addTimestamp={true}
+            />
+          </div>
+
 
           <div className="dashboard-grid">
             {TOOLS.filter((t) => t.id !== 'dashboard').map((tool) => (

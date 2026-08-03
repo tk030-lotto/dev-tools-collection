@@ -1,0 +1,164 @@
+/* ExportButtons Premium CSS Design */
+
+.export-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.export-buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary, #f1f5f9);
+  background: var(--bg-card, rgba(30, 41, 59, 0.7));
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.export-btn:hover {
+  background: var(--bg-hover, rgba(51, 65, 85, 0.8));
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.export-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.export-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.export-btn:hover .export-btn-icon {
+  transform: scale(1.1);
+}
+
+/* Variant Specific Styling */
+.export-btn-copy {
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.export-btn-copy:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.15);
+}
+
+.export-btn-markdown {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.export-btn-markdown:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+}
+
+.export-btn-html {
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.export-btn-html:hover {
+  border-color: rgba(249, 115, 22, 0.6);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.15);
+}
+
+.export-btn-json {
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.export-btn-json:hover {
+  border-color: rgba(234, 179, 8, 0.6);
+  box-shadow: 0 4px 14px rgba(234, 179, 8, 0.15);
+}
+
+.export-btn-text {
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.export-btn-text:hover {
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+/* State Feedback Styles */
+.export-btn-success {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.6) !important;
+  color: #34d399 !important;
+  animation: pulse-success 0.3s ease-out;
+}
+
+.export-btn-error {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.6) !important;
+  color: #f87171 !important;
+}
+
+@keyframes pulse-success {
+  0% {
+    transform: scale(0.96);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Toast Message Notification */
+.export-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #34d399;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.25s ease-out;
+  width: fit-content;
+}
+
+.export-toast-error {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
