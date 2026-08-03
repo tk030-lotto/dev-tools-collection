@@ -141,3 +141,37 @@
 .tool-placeholder-icon {
   font-size: 4rem;
 }
+
+/* --- Responsive Media Queries --- */
+@media (max-width: 768px) {
+  .app-main-content {
+    padding: 16px;
+  }
+
+  .dashboard-hero {
+    padding: 24px 20px;
+  }
+
+  .dashboard-hero-title {
+    font-size: 1.4rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .tool-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main-content {
+    padding: 12px;
+  }
+
+  .dashboard-hero {
+    padding: 20px 16px;
+  }
+}

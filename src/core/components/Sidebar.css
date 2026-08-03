@@ -121,3 +121,22 @@
   display: none;
 }
 
+/* --- Responsive Layout Adjustments --- */
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - 64px);
+    box-shadow: var(--shadow-xl);
+    transform: translateX(0);
+    z-index: 100;
+  }
+
+  .app-sidebar.collapsed {
+    transform: translateX(-100%);
+    width: 260px;
+  }
+}
+
