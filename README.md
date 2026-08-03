@@ -1,72 +1,95 @@
 # 開発ツール集 (DevTools Suite)
 
-ソフトウェア開発を効率化・品質向上・公開支援するための小規模ユーティリティツール集です。
-本プロジェクトは **コアプラットフォーム（Core Shell）＋機能プラグイン（Tool Plugins）** の拡張型プラグインアーキテクチャを採用しています。
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-18.3-61dafb.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178c6.svg)
+![Vite](https://img.shields.io/badge/Vite-5.4-646cff.svg)
+![Vanilla CSS](https://img.shields.io/badge/CSS-Vanilla-ff69b4.svg)
+
+**開発ツール集 (DevTools Suite)** は、ソフトウェア開発およびAI協調開発におけるドキュメント検査、セキュリティチェック、コンテキストパック生成、プロンプト差分比較、整合性検証を統合・効率化するためのフロントエンドWebアプリケーションです。
 
 ---
 
-## 📅 工程管理・ロードマップ
+## ✨ 主な特徴 (Features)
 
-開発工程および各タスクの進捗状況は [SCHEDULE.md](./SCHEDULE.md) で管理されています。
+- **完全クライアントサイド完結 & Zero-Server**:
+  ファイル処理、差分解析、レポート生成、データ書き出しはすべてブラウザ内でローカル処理されます。外部サーバーへデータを送信しないためセキュリティ面でも安心です。
+- **プラグインベース拡張アーキテクチャ (Plugin Architecture)**:
+  `ToolPlugin` および `PluginRegistry` によるモジュール型設計。新しい開発ツールを容易に追加・拡張可能。
+- **堅牢なエラー絶縁 (Error Isolation)**:
+  万が一特定のプラグインで例外が発生しても `PluginErrorBoundary` が安全にキャッチし、アプリ全体の影響を防止。
+- **共通 Drag & Drop & ファイルロード**:
+  ファイルやフォルダの一括ドロップ受入、自動エンコーディング判定、サイズ・拡張子バリデーション機能を提供。
+- **共通 Report Exporters**:
+  各ツールの分析・検証結果を 1 クリックで Markdown, HTML, JSON ファイル出力、およびクリップボードコピー可能。
+- **洗練されたプレミアムデザイン**:
+  ダークモード / ライトモード対応、ガラスモルフィズムスタイル、スムースなアニメーション、全デバイス対応レスポンシブデザイン。
 
 ---
 
-## 🏗️ システムアーキテクチャ
+## 🛠️ 搭載ツール・プラグイン一覧 (Tools & Plugins)
+
+| プラグイン名 | カテゴリ | 概要・主要機能 |
+| :--- | :--- | :--- |
+| 🔗 **MarkdownLinkChecker** | Documentation | Markdown 内の相対パスリンク確認、ローカル画像参照切れ検出、アンカーリンク検証、リンク検証レポート生成。 |
+| 🛡️ **GitHubPreflight** | Security | Pre-commit セキュリティ点検。APIキー / アクセストークン検出、TODO / console.log 残存チェック、不要ファイル検出。 |
+| 📦 **HandoffPack** | AI Workflow | 参照ドキュメント（README/SCHEDULE/RECORD等）と完了タスク・次回予定を統合したAI引き継ぎ用コンテキストパック自動生成。 |
+| ⚖️ **PromptDiff** | Optimization | 2つのプロンプト・テキストの行単位＆単語単位の差分（Diff）比較。類似率表示、追加/削除ハイライト表示、差分出力。 |
+| 🔍 **DocumentConsistencyChecker** | Verification | 複数ドキュメント間の用語表記ゆれ、タスクID・ステータス矛盾、欠落セクション、未完了タスクの一括検証。 |
+
+---
+
+## 🚀 クイックスタート (Quick Start)
+
+### 開発環境での起動
+
+```bash
+# 依存関係のインストール
+npm install
+
+# 開発用ローカルサーバーの起動 (http://localhost:5173)
+npm run dev
+```
+
+### Production ビルド
+
+```bash
+# TypeScript 型チェックおよびバンドルビルド
+npm run build
+
+# ビルド成果物のローカルプレビュー
+npm run preview
+```
+
+---
+
+## 📁 プロジェクト構成 (Project Structure)
 
 ```text
-+-------------------------------------------------------------------+
-|                     DevTools Core Shell (UI/Service Container)    |
-|  - Layout / Sidebar          - File I/O & Drag-and-Drop           |
-|  - Theme & Design Tokens     - Common Report Exporter (MD/HTML)   |
-+-------------------------------------------------------------------+
-                                   | (ToolPlugin Registry API)
-   +-------------------------------+-------------------------------+
-   |                               |                               |
-+--v------------------+  +---------v----------+  +-----------------v-+
-| HandoffPack Plugin  |  | PromptDiff Plugin  |  | LinkChecker...... |
-+---------------------+  +--------------------+  +-------------------+
+c:\Users\tk030\Desktop\開発ツール集
+├── dist/                          # Production ビルド成果物
+├── src/
+│   ├── core/                      # コア基盤
+│   │   ├── components/            # UI Shell (Header, Sidebar, MainContent, Layout, ExportButtons, FileDropZone)
+│   │   ├── registry/              # PluginRegistry API & PluginContainer / ErrorBoundary
+│   │   ├── services/              # fileReaderService, exportService
+│   │   └── types/                 # 共通型定義 (file, export, plugin)
+│   ├── plugins/                   # 機能プラグイン
+│   │   ├── markdownLinkCheckerPlugin.tsx
+│   │   ├── gitHubPreflightPlugin.tsx
+│   │   ├── handoffPackPlugin.tsx
+│   │   ├── promptDiffPlugin.tsx
+│   │   └── documentConsistencyCheckerPlugin.tsx
+│   ├── App.tsx                    # アプリケーションルート
+│   ├── index.css                  # 共通デザインシステム & ユーティリティ
+│   └── main.tsx                   # エントリポイント
+├── README.md                      # 本ドキュメント
+├── SCHEDULE.md                    # 工程管理表
+└── RECORD.md                      # 開発記録
 ```
 
 ---
 
-## 🛠️ プラグイン一覧
+## 📄 ライセンス (License)
 
-| ツール名 | プラグインID | 分類 | 概要 | ステータス |
-| :--- | :--- | :--- | :--- | :--- |
-| **HandoffPack** | `handoff-pack` | Generator | [仕様書](./HandoffPack/README.md) - AI引き継ぎパック自動生成 | 仕様策定済 |
-| **PromptDiff** | `prompt-diff` | Analysis | [仕様書](./PromptDiff/README.md) - AIプロンプトの差分比較・履歴管理 | 仕様策定済 |
-| **DocumentConsistencyChecker** | `doc-consistency` | Checker | [仕様書](./DocumentConsistencyChecker/README.md) - ドキュメント不一致・重複・欠落検出 | 仕様策定済 |
-| **GitHubPreflight** | `github-preflight` | Checker | [仕様書](./GitHubPreflight/README.md) - GitHub公開前自動チェック（APIキー等検出） | 仕様策定済 |
-| **MarkdownLinkChecker** | `md-link-checker` | Checker | [仕様書](./MarkdownLinkChecker/README.md) - Markdown内の相対リンク・画像切れ検査 | 仕様策定済 |
-
----
-
-## 🧩 プラグイン開発方法
-
-新しいツールを開発する際は、コアシステムを変更せず `src/plugins/` 配下にプラグインコンポーネントを追加し、`ToolPlugin` インターフェースに従って登録します。
-
-```typescript
-// 新規プラグインの登録例
-import { registerPlugin } from '@/core/registry';
-
-registerPlugin({
-  id: 'my-custom-plugin',
-  name: 'カスタム解析ツール',
-  description: '独自フォーマットを解析するツール',
-  icon: 'search',
-  category: 'analysis',
-  version: '1.0.0',
-  Component: MyCustomComponent,
-});
-```
-
-詳細なインターフェース仕様および共通サービスについては [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) を参照してください。
-
----
-
-## 📚 関連ドキュメント
-
-- [SCHEDULE.md](./SCHEDULE.md) : 工程管理表・開発ロードマップ
-- [DEVELOPMENT_GUIDE.md](./DEVELOPMENT_GUIDE.md) : 共通開発ガイドライン・プラグイン定義仕様・使用技術
-- [SKILLS.md](./SKILLS.md) : プロジェクト共通スキル規律
-- [.agents/AGENTS.md](./.agents/AGENTS.md) : AIエージェント行動規範
+[MIT License](LICENSE)
