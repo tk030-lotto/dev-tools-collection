@@ -207,3 +207,12 @@
 - `markdownLinkCheckerPlugin.tsx`: fenced code block 内に書かれたMarkdownリンクを検査対象から外し、コード例のリンクを誤検出する問題を修正。
 - `promptDiffPlugin.tsx`: Original / Modified の各入力を単一ファイル選択に変更し、後から選択したファイルが先頭の既存ファイルに隠れて差し替わらない問題を修正。
 - 検証結果: `npm run lint` 成功、`npm run build` 成功（Vite 5.4.21、55 modules、1.92秒）。
+### 24. プラグイン責務分割リファクタリング完了
+- 300行超の主要プラグインを、既存の公開importパスを維持したまま責務別モジュールへ分割。
+  - `markdownLinkChecker`: `types.ts` / `analyzerService.ts` / `MarkdownLinkCheckerComponent.tsx` / `plugin.ts`
+  - `documentConsistencyChecker`: `types.ts` / `sampleData.ts` / `analyzerService.ts` / `DocumentConsistencyCheckerComponent.tsx` / `plugin.ts`
+  - `gitHubPreflight`: `types.ts` / `analyzerService.ts` / `GitHubPreflightComponent.tsx` / `plugin.ts`
+  - `handoffPack`: `types.ts` / `templateService.ts` / `HandoffPackComponent.tsx` / `plugin.ts`
+  - `promptDiff`: `types.ts` / `sampleData.ts` / `diffService.ts` / `PromptDiffComponent.tsx` / `plugin.ts`
+- 旧来の各 `*Plugin.tsx` は後方互換性を担保する再エクスポート窓口へ縮小。解析条件・生成テンプレート・プラグインID・登録メタデータは変更なし。
+- 検証結果: `npm run lint` 成功、`npm run build` 成功（Vite 5.4.21、72 modules、1.91秒）。
