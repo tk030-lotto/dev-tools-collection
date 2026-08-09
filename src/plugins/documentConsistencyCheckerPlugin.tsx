@@ -551,10 +551,11 @@ ${issue.suggestion ? `- **推奨アクション**: ${issue.suggestion}` : ''}
 
       {/* File Drop Zone */}
       <FileDropZone
+        files={files}
         options={{
           accept: ['.md', '.txt', '.json', '.rst'],
         }}
-        onFilesLoaded={(loaded) => setFiles((prev) => [...prev, ...loaded])}
+        onFilesLoaded={setFiles}
         title="プロジェクトドキュメントの一括ドロップ"
         description="README.md / SCHEDULE.md / RECORD.md 等のファイルを複数ドラッグ＆ドロップ（またはクリックして選択）"
       />

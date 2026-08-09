@@ -37,7 +37,7 @@ export const HandoffPackComponent: React.FC<PluginComponentProps> = ({ metadata 
 
   // Automatically scan loaded files for TODOs or Completed items
   const handleFilesLoaded = (loaded: LoadedFile[]) => {
-    setFiles((prev) => [...prev, ...loaded]);
+    setFiles(loaded);
 
     const detectedDone: string[] = [];
     const detectedNext: string[] = [];
@@ -497,6 +497,7 @@ ${nextItems.map((item) => `- ${item}`).join('\n') || '- (未入力)'}
                 📂 ドキュメント / ソースコード ドロップ
               </h3>
               <FileDropZone
+                files={files}
                 onFilesLoaded={handleFilesLoaded}
                 options={{
                   accept: ['.md', '.txt', '.json', '.ts', '.tsx', '.js', '.py'],

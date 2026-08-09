@@ -336,6 +336,7 @@ ${lineDiffs
             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{originalText.length} chars</span>
           </div>
           <FileDropZone
+            multiple={false}
             options={{ accept: ['.txt', '.md', '.prompt', '.json', '.js', '.ts'] }}
             onFilesLoaded={handleOriginalFiles}
             title="Original ファイルドロップ"
@@ -371,6 +372,7 @@ ${lineDiffs
             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{modifiedText.length} chars</span>
           </div>
           <FileDropZone
+            multiple={false}
             options={{ accept: ['.txt', '.md', '.prompt', '.json', '.js', '.ts'] }}
             onFilesLoaded={handleModifiedFiles}
             title="Modified ファイルドロップ"

@@ -351,6 +351,7 @@ ${
           📂 Target Project Files
         </h3>
         <FileDropZone
+          files={loadedFiles}
           onFilesLoaded={(files) => setLoadedFiles(files)}
           options={{ maxSizeBytes: 20 * 1024 * 1024 }}
           title="プロジェクトファイルをドラッグ＆ドロップ"

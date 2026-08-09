@@ -89,8 +89,16 @@ function parseAndValidateLinks(files: LoadedFile[]): {
     }
 
     const lines = f.content.split('\n');
+    let isInsideFencedCodeBlock = false;
     lines.forEach((lineText, lineIdx) => {
       const lineNum = lineIdx + 1;
+
+      // コード例内のリンク記法は検査対象外にする
+      if (/^\s*(`{3,}|~{3,})/.test(lineText)) {
+        isInsideFencedCodeBlock = !isInsideFencedCodeBlock;
+        return;
+      }
+      if (isInsideFencedCodeBlock) return;
 
       // 1. Markdown Images ![alt](url)
       const mdImageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
@@ -352,7 +360,8 @@ const MarkdownLinkCheckerView: React.FC<PluginComponentProps> = () => {
       {/* Input Section */}
       {activeTab === 'upload' ? (
         <FileDropZone
-          onFilesLoaded={(files) => setLoadedFiles((prev) => [...prev, ...files])}
+          files={loadedFiles}
+          onFilesLoaded={setLoadedFiles}
           options={{
             accept: ['.md', '.markdown', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.txt'],
           }}

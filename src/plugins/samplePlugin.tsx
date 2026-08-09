@@ -41,7 +41,8 @@ const SamplePluginView: React.FC<PluginComponentProps> = ({ metadata }) => {
       <div>
         <h5 style={{ margin: '0 0 0.5rem 0', color: '#334155' }}>📁 ファイル読み込みテスト</h5>
         <FileDropZone
-          onFilesLoaded={(newFiles) => setFiles((prev) => [...prev, ...newFiles])}
+          files={files}
+          onFilesLoaded={setFiles}
         />
       </div>
 

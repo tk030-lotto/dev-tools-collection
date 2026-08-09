@@ -4,6 +4,8 @@ import { readFiles, formatFileSize } from '../services/fileReaderService';
 import './FileDropZone.css';
 
 export interface FileDropZoneProps {
+  /** 親コンポーネントで管理する場合の選択済みファイル */
+  files?: LoadedFile[];
   onFilesLoaded?: (files: LoadedFile[]) => void;
   onErrors?: (errors: FileValidationError[]) => void;
   options?: FileReadOptions;
@@ -15,6 +17,7 @@ export interface FileDropZoneProps {
 }
 
 export const FileDropZone: React.FC<FileDropZoneProps> = ({
+  files: controlledFiles,
   onFilesLoaded,
   onErrors,
   options,
@@ -29,6 +32,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
   const [loadedFiles, setLoadedFiles] = useState<LoadedFile[]>([]);
   const [errors, setErrors] = useState<FileValidationError[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const currentFiles = controlledFiles ?? loadedFiles;
 
   const acceptString = options?.accept?.join(',') || '';
 
@@ -52,10 +56,12 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
 
     if (result.loadedFiles.length > 0) {
       const updatedFiles = multiple
-        ? [...loadedFiles, ...result.loadedFiles]
+        ? [...currentFiles, ...result.loadedFiles]
         : result.loadedFiles;
 
-      setLoadedFiles(updatedFiles);
+      if (controlledFiles === undefined) {
+        setLoadedFiles(updatedFiles);
+      }
       if (onFilesLoaded) onFilesLoaded(updatedFiles);
     }
   };
@@ -105,13 +111,17 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
   };
 
   const handleRemoveFile = (fileId: string) => {
-    const updated = loadedFiles.filter((f) => f.id !== fileId);
-    setLoadedFiles(updated);
+    const updated = currentFiles.filter((f) => f.id !== fileId);
+    if (controlledFiles === undefined) {
+      setLoadedFiles(updated);
+    }
     if (onFilesLoaded) onFilesLoaded(updated);
   };
 
   const handleClearAll = () => {
-    setLoadedFiles([]);
+    if (controlledFiles === undefined) {
+      setLoadedFiles([]);
+    }
     setErrors([]);
     if (onFilesLoaded) onFilesLoaded([]);
   };
@@ -207,7 +217,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
       )}
 
       {/* 選択済みファイル一覧 */}
-      {showFileList && loadedFiles.length > 0 && (
+      {showFileList && currentFiles.length > 0 && (
         <div className="loaded-files-container animate-fade-in">
           <div className="loaded-files-header">
             <div className="loaded-files-title">
@@ -222,7 +232,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <polyline points="14 2 14 8 20 8" />
               </svg>
-              選択済みファイル ({loadedFiles.length} 件)
+              選択済みファイル ({currentFiles.length} 件)
             </div>
             <button
               className="btn btn-secondary btn-sm"
@@ -233,7 +243,7 @@ export const FileDropZone: React.FC<FileDropZoneProps> = ({
           </div>
 
           <div className="loaded-files-list">
-            {loadedFiles.map((file) => (
+            {currentFiles.map((file) => (
               <div key={file.id} className="loaded-file-item">
                 <div className="loaded-file-info">
                   <span className="file-icon-badge">
