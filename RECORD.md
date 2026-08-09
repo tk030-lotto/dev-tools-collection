@@ -200,3 +200,10 @@
 
 
 
+
+### 23. 総合コード監査フォローアップ修正完了
+- 監査指摘を実コードで再検証し、`gitHubPreflightPlugin.tsx` の RegExp `lastIndex` リセットは既に実装済み、`documentConsistencyCheckerPlugin.tsx` の用語辞書は固定値であるため正規表現エスケープ漏れは現状の不具合ではないことを確認。
+- 実不具合として、`FileDropZone` が選択済みファイル全件を通知する仕様に対し複数プラグイン側が再度追記していたため、2回目以降のファイル追加で同一ファイルが重複する問題を修正。共通コンポーネントに制御モードを追加し、MarkdownLinkChecker / DocumentConsistencyChecker / HandoffPack / GitHubPreflight / SamplePlugin の状態を一元化。
+- `markdownLinkCheckerPlugin.tsx`: fenced code block 内に書かれたMarkdownリンクを検査対象から外し、コード例のリンクを誤検出する問題を修正。
+- `promptDiffPlugin.tsx`: Original / Modified の各入力を単一ファイル選択に変更し、後から選択したファイルが先頭の既存ファイルに隠れて差し替わらない問題を修正。
+- 検証結果: `npm run lint` 成功、`npm run build` 成功（Vite 5.4.21、55 modules、1.92秒）。
